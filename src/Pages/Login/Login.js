@@ -6,7 +6,7 @@ import Segments from "../../Components/Segments/Segments";
 import SwatchColor from "../../Components/SwatchColor/SwatchColor";
 const Login = (props) => {
   const [numberOfSlice, setSlice] = useState(1);
- 
+  const [colorArr, setColorArr] = useState([]);
   const [numberText, setText] = useState("0");
   const [color, setColor] = useState("#fff");
   const onChangeText = (e) => {
@@ -21,7 +21,7 @@ const Login = (props) => {
     setSlice(1);
     setText("1");
     setSlice(1);
-    props.setColorArr([]);
+    setColorArr([]);
   }
   const paperStyle = {
     padding: "20px",
@@ -61,7 +61,7 @@ const Login = (props) => {
             <div style={{ margin: "20px" }}>
               <SwatchColor style={{ innerWidth: "25px" }} change={setColor} />
             </div>
-            <Segments number={numberOfSlice} color={color} colorArr={props.colorArr} setColorArr={props.setColorArr} />
+            <Segments number={numberOfSlice} color={color} colorArr={colorArr} setColorArr={setColorArr} />
             <Button style={{ margin: "15px" }} variant="containedSecondary" onClick={reset}>
               Reset
             </Button>
