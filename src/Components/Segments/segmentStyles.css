@@ -1,16 +1,7 @@
-.textBox {
-    margin: 5%;
-    border: 0.6pt solid;
-    height: 1.5rem;
-    width: 12rem;
-    border-radius: 0.5rem;
-    text-align: center;
-  }
-  .seg:hover {
+
+  .segment:hover {
     transition-delay: 0.08s;
-    filter: brightness(100%);
+    filter: brightness(150%);
   }
-  .seg {
-    line-width: 2pt;
-  }
+  
   

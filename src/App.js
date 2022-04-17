@@ -6,12 +6,16 @@ import TextField from "@mui/material/TextField";
 import Login from "./Pages/Login/Login";
 import SignUpPre from "./Pages/SignUP/SignUpPre";
 import SignUp from "./Pages/SignUP/SignUp";
-
+import Navigator from './Pages/SignUP/Navigator';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import FadeIn from "react-fade-in";
 // import "./styles.css";
 const App = (props) => {
-  const [colorArr, setColorArr] = useState([]);
+
+  const [name,setName]=useState("");
+  const [address,setAddress]=useState("");
+  const [email,setEmail]=useState("");
+  const [phone,setPhone]=useState("");
 
   return (
     <FadeIn>
@@ -19,6 +23,7 @@ const App = (props) => {
         <main>
           <Switch>
             <Route path="/signup" exact>
+            <FadeIn>
               <div
                 style={{
                   display: "flex",
@@ -27,8 +32,18 @@ const App = (props) => {
                   margin: "2rem"
                 }}
               >
-                <SignUpPre />
+                <SignUpPre
+                name={name}
+                setName={setName}
+                email={email}
+                setEmail={setEmail}
+                address={address}
+                setAddress={setAddress}
+                phone={phone}
+                setPhone={setPhone}
+                />
               </div>
+              </FadeIn>
             </Route>
             <Route path="/" exact>
               <div
@@ -39,7 +54,8 @@ const App = (props) => {
                   margin: "2rem"
                 }}
               >
-                <Login />
+                {/* <Login /> */}
+                <Navigator/>
               </div>
             </Route>
 
@@ -52,11 +68,17 @@ const App = (props) => {
                   margin: "2rem"
                 }}
               >
-                <SignUp />
+                <SignUp 
+                  name={name}
+                  address={address}
+                  email={email}
+                  phone={phone}
+                />
               </div>
             </Route>
 
             <Route path="/login" exact>
+            <FadeIn>
               <div
                 style={{
                   display: "flex",
@@ -65,8 +87,9 @@ const App = (props) => {
                   margin: "2rem"
                 }}
               >
-                <Login colorArr={colorArr} setColorArr={setColorArr} />
+                <Login />
               </div>
+              </FadeIn>
             </Route>
           </Switch>
         </main>

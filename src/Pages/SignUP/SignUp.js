@@ -2,17 +2,35 @@ import React, { useState } from "react";
 import { Grid, Paper } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import LoadingButton from "@mui/material/Button";
 import Segments from "../../Components/Segments/Segments";
 import SwatchColor from "../../Components/SwatchColor/SwatchColor";
-import { Link } from "react-router-dom";
+import { Snackbar,Alert  } from "@mui/material";
+import { Link ,useHistory} from "react-router-dom";
 const SignUp = (props) => {
   const [numberOfSlice, setSlice] = useState(1);
   const [colorArr, setColorArr] = useState([]);
+  const [message,setMessage]=useState("");
+  const [open,setOpen]=useState(false);
+  const [severity,setSeverity]=useState("success");
+  const [loading, setLoading] = React.useState(false);
+  const [pass,setPass]=React.useState("");
+  const history=useHistory();
+  const handleClose = () => {
+    setOpen(false)
+  };
   const onChangeText = (e) => {
     const val = e.target.value;
     setText(val);
   };
   const onPress = () => {
+    if(numberText<5 || numberText>15)
+    {
+      setMessage("Enter values in range 5 to 15");
+      setSeverity("error")
+      setOpen(true);
+    }
+    else
     setSlice(parseInt(numberText));
   };
   const [numberText, setText] = useState("0");
@@ -28,7 +46,63 @@ const SignUp = (props) => {
     setText("1");
     setColor("#fff")
     setColorArr([]);
+    setPass("");
   };
+
+  const onSubmit=(e)=>{
+
+    if(numberText<5 || numberText>15)
+    {
+      setMessage("Enter values in range 5 to 15");
+      setSeverity("error")
+      setOpen(true);
+    }
+    else if(colorArr.length<numberText)
+    {
+      setMessage("Fill the all segments with color");
+      setSeverity("error")
+      setOpen(true);
+    }
+    else
+    {
+      setLoading(true);
+      const requestOptions = {
+        method: 'POST',
+        mode: 'cors',
+        headers: { 'Content-Type': 'application/json' ,'Access-Control-Allow-Origin': 'http://localhost:3000',
+        'Access-Control-Allow-Credentials': 'true'
+      },
+        body:JSON.stringify({email:props.email,segments:numberText,password:pass,name:props.name,phone:props.phone,address:props.address })
+    };
+      fetch("http://localhost:4000/signup",requestOptions)
+    .then(res=>{
+      console.log(res);
+      return res.json()
+    })
+    .then(data=>{
+     
+      setMessage(data.message);
+      setLoading(false);
+    })
+
+    if(message!="Success")
+      setSeverity("error");
+    else
+    {
+      setSeverity("success");
+      setMessage("Registered Sucessfully");
+    }
+      
+      
+      setOpen(true);
+      
+    }
+  }
+
+  if(props.name==="" || props.email==="" || props.phone==="" || props.address==="")
+   history.push('/signup');
+
+
   return (
     <div style={{ marginTop: "3rem" }}>
       <Grid>
@@ -72,6 +146,8 @@ const SignUp = (props) => {
                 color={color}
                 colorArr={colorArr}
                 setColorArr={setColorArr}
+                pass={pass}
+                setPass={setPass}
               />
               <Button
                 style={{ margin: "15px" }}
@@ -80,13 +156,29 @@ const SignUp = (props) => {
               >
                 Reset
               </Button>
-              <Button style={{ margin: "15px" }} variant="contained">
+              <LoadingButton style={{ margin: "15px" }} 
+                variant="contained"
+                loading={loading}
+                onClick={onSubmit}
+              >
                 Submit
-              </Button>
+              </LoadingButton>
             </div>
           </div>
         </Paper>
       </Grid>
+      <Snackbar
+      autoHideDuration={4000}
+        anchorOrigin={{ vertical:'top', horizontal:'center' }}
+        open={open}
+        onClose={handleClose}
+        key={"signUp"}
+        severity={severity}
+      >
+        <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+          {message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

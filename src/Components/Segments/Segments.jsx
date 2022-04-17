@@ -3,8 +3,9 @@ import "./segmentStyles.css";
 
 const Segments = (props) => {
   const numberOfSlice = props.number;
-  const [pass, setPass] = useState("");
-  // const [colorArr, setColorArr] = useState([]);
+  let pass=props.pass;
+  let setPass=props.setPass;
+
   const colorArr=props.colorArr;
   const setColorArr=props.setColorArr;
   const color = props.color;
@@ -58,7 +59,7 @@ const Segments = (props) => {
           d={pathData}
           fill={slice.color}
           key={pathData}
-          className="seg"
+          className="segment"
         />
       );
     });
