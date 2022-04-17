@@ -101,15 +101,13 @@ const Login = (props) => {
     .then(data=>{
       setLoading(false);
       setMessage(data.message);
-      if(message!="User authenticated")
+      if(data.message!="User authenticated")
       {
-        setSeverity("error");
         setSeverity("error");
         setOpen(true);
       }
       else
       {
-        setSeverity("success");
         setSeverity("success");
         setOpen(true);
       }

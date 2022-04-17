@@ -80,21 +80,23 @@ const SignUp = (props) => {
       return res.json()
     })
     .then(data=>{
-     
-      setMessage(data.message);
       setLoading(false);
-    })
-
-    if(message!="Success")
+      setMessage(data.message);
+      if(data.message!="Success")
       setSeverity("error");
-    else
-    {
+       else
+      {
       setSeverity("success");
       setMessage("Registered Sucessfully");
-    }
+      
+       }
+       setOpen(true);
+    })
+
+   
       
       
-      setOpen(true);
+      
       
     }
   }
