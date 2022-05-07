@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Grid, Paper } from "@mui/material";
+import { Grid, Paper, Snackbar, Alert } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import LoadingButton from "@mui/material/Button";
+import Button from "@mui/material/Button";
 import Segments from "../../Components/Segments/Segments";
 import SwatchColor from "../../Components/SwatchColor/SwatchColor";
-import { Snackbar,Alert  } from "@mui/material";
+
+
 import { Link ,useHistory} from "react-router-dom";
 const SignUp = (props) => {
   const [numberOfSlice, setSlice] = useState(1);
@@ -13,7 +14,7 @@ const SignUp = (props) => {
   const [message,setMessage]=useState("");
   const [open,setOpen]=useState(false);
   const [severity,setSeverity]=useState("success");
-  const [loading, setLoading] = React.useState(false);
+  const [loadingVar, setLoading] = React.useState(false);
   const [pass,setPass]=React.useState("");
   const history=useHistory();
   const handleClose = () => {
@@ -74,7 +75,7 @@ const SignUp = (props) => {
       },
         body:JSON.stringify({email:props.email,segments:numberText,password:pass,name:props.name,phone:props.phone,address:props.address })
     };
-      fetch("http://localhost:4000/signup",requestOptions)
+      fetch("https://auth2d.herokuapp.com/signup",requestOptions)
     .then(res=>{
       console.log(res);
       return res.json()
@@ -88,16 +89,14 @@ const SignUp = (props) => {
       {
       setSeverity("success");
       setMessage("Registered Sucessfully");
-      
        }
        setOpen(true);
+ 
+        setTimeout(function(){
+          history.push("/login");
+          }, 3000);
+        
     })
-
-   
-      
-      
-      
-      
     }
   }
 
@@ -160,10 +159,10 @@ const SignUp = (props) => {
               </Button>
               <LoadingButton style={{ margin: "15px" }} 
                 variant="contained"
-                loading={loading}
+                loading={loadingVar}
                 onClick={onSubmit}
               >
-                Submit
+                Submit{" "}
               </LoadingButton>
             </div>
           </div>

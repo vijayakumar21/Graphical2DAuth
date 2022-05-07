@@ -46,6 +46,7 @@ const App = (props) => {
               </FadeIn>
             </Route>
             <Route path="/" exact>
+            <FadeIn>
               <div
                 style={{
                   display: "flex",
@@ -54,9 +55,9 @@ const App = (props) => {
                   margin: "2rem"
                 }}
               >
-                {/* <Login /> */}
-                <Navigator/>
+                <Login />
               </div>
+              </FadeIn>
             </Route>
 
             <Route path="/signup/next" exact>

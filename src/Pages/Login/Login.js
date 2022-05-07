@@ -93,7 +93,7 @@ const Login = (props) => {
       },
         body:JSON.stringify({email:email,segments:numberText,password:pass })
     };
-      fetch("http://localhost:4000/signin",requestOptions)
+      fetch("https://auth2d.herokuapp.com/signin",requestOptions)
     .then(res=>{
       console.log(res);
       return res.json()
